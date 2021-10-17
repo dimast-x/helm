@@ -1,0 +1,14 @@
+deployment:
+  name: web-app
+  replicas: 3
+  container: 
+    image: dimast0/auth:84e9f9e
+    port: 3000
+ingress:
+  host: my-application.local
+configmap:
+  api_key: your_api_key
+secrets:
+  secret_key: bWVnYV9zZWNyZXRfa2V5Cg==
+
+

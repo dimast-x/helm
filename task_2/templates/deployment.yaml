@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: node
+          image: {{ .Values.deployment.container.image | quote }}
+          env:
+            - name: API_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: api-config
+                  key: api_key
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: secret_key
+          ports:
+            - containerPort: {{ .Values.deployment.container.port }}
